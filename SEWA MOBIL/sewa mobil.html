@@ -1,0 +1,178 @@
+<!doctype html>
+<html lang="id">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Sewa Aja - Rental Mobil</title>
+
+<style>
+/* ==== STYLE CSS LANGSUNG TERSEMAT ==== */
+*{box-sizing:border-box}body{font-family:Inter,Arial,sans-serif;margin:0;background:#f4f7ff;color:#0f1724}
+.container{max-width:1100px;margin:0 auto;padding:20px}
+.site-header{background:linear-gradient(90deg,#4a5cff,#2bb0ff);color:white}
+.site-header .container{display:flex;align-items:center;justify-content:space-between}
+.logo{margin:0;padding:14px 0;font-size:22px}
+.nav a{color:white;margin-left:18px;text-decoration:none;font-weight:600}
+.hero{padding:40px 0}
+.hero-inner{display:flex;gap:20px;align-items:center;justify-content:space-between}
+.hero h2{font-size:28px;margin:0}
+.hero p{color:#e8f0ff}
+.hero-img{width:320px;border-radius:12px;box-shadow:0 8px 30px rgba(11,74,200,0.12)}
+.cars{padding:30px 20px}
+.cars h2{text-align:center;margin-bottom:18px}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:18px}
+.card{background:white;border-radius:12px;padding:12px;box-shadow:0 6px 20px rgba(15,23,36,0.06);display:flex;flex-direction:column;align-items:center;transition:transform .18s}
+.card img{width:100%;height:140px;object-fit:cover;border-radius:8px}
+.card:hover{transform:scale(1.03)}
+.card h3{margin:10px 0 6px}
+.price{color:#0b74de;font-weight:700}
+.meta{color:#6b7280;font-size:13px;margin-bottom:8px}
+.actions{display:flex;gap:8px;width:100%;justify-content:center}
+.btn{padding:9px 12px;border-radius:10px;border:0;cursor:pointer}
+.btn.primary{background:#0b74de;color:white}
+.btn.ghost{background:transparent;border:1px solid #e6eefc}
+.contact{background:#fff;padding:30px;margin:30px 0;border-radius:10px;box-shadow:0 8px 30px rgba(11,74,200,0.04)}
+.contact-inner{display:flex;gap:20px;align-items:flex-start;justify-content:space-between}
+.contact-form{max-width:420px;display:flex;flex-direction:column;gap:10px}
+.contact-form input,.contact-form textarea{padding:10px;border-radius:8px;border:1px solid #e6eefc}
+.site-footer{background:#0f1724;color:#cbd5e1;padding:18px;text-align:center;border-top:4px solid rgba(11,74,200,0.06)}
+.modal{position:fixed;inset:0;display:none;align-items:center;justify-content:center;background:rgba(2,6,23,0.5);padding:20px}
+.modal-content{background:white;padding:18px;border-radius:12px;max-width:520px;width:100%;position:relative}
+.modal-close{position:absolute;right:12px;top:8px;background:transparent;border:0;font-size:22px;cursor:pointer}
+@media(max-width:720px){.hero-inner{flex-direction:column}.contact-inner{flex-direction:column}}
+</style>
+</head>
+<body>
+
+<!-- ==== HEADER ==== -->
+<header class="site-header">
+  <div class="container">
+    <h1 class="logo">Sewa Aja</h1>
+    <nav class="nav">
+      <a href="#home">Beranda</a>
+      <a href="#cars">Daftar Mobil</a>
+      <a href="#contact">Kontak</a>
+    </nav>
+  </div>
+</header>
+
+<!-- ==== HERO ==== -->
+<section id="home" class="hero">
+  <div class="container hero-inner">
+    <div>
+      <h2>Sewa mobil cepat & terpercaya</h2>
+      <p>Cari, bandingkan, dan pesan mobil terbaik untuk perjalanan Anda.</p>
+      <button id="openBooking" class="btn primary">Pesan Sekarang</button>
+    </div>
+    <img src="avanza.png" alt="mobil" class="hero-img">
+  </div>
+</section>
+
+<!-- ==== MOBIL ==== -->
+<section id="cars" class="container cars">
+  <h2>Daftar Mobil</h2>
+  <div class="grid">
+
+    <!-- LIST MOBIL -->
+    <script>
+    const mobilList = [
+      {nama:"Toyota Avanza", harga:"Rp 350.000 / hari", foto:"https://static.wixstatic.com/media/304dbc_e38bc99264104901b33f72b7e02edefa~mv2.png/v1/fit/w_500,h_500,q_90/file.png", meta:"7 kursi • AC • Manual"},
+      {nama:"Honda Brio", harga:"Rp 300.000 / hari", foto:"https://hondamuliacianjur.co.id/wp-content/uploads/2019/05/BRIO_3per4-Front-1.png", meta:"5 kursi • AC • Manual"},
+      {nama:"Toyota Fortuner", harga:"Rp 900.000 / hari", foto:"https://static.wixstatic.com/media/261cbb_860011c36ede4a35b6461423e458edb2~mv2.png/v1/fill/w_560,h_332,al_c,q_85,usm_0.66_1.00_0.01,enc_avif,quality_auto/261cbb_860011c36ede4a35b6461423e458edb2~mv2.png", meta:"7 kursi • AC • Auto"},
+      {nama:"Mercedes-Benz", harga:"Rp 1.800.000 / hari", foto:"https://www.clickmercedesbenz.com/file/Mercedes-Benz-E-Class-400x250.jpg", meta:"5 kursi • AC • Auto"},
+      {nama:"BMW Sport", harga:"Rp 2.500.000 / hari", foto:"https://www.bmw-egypt.com/content/dam/bmw/common/all-models/3-series/sedan/2022/navigation/bmw-3-series-sedan-lci-modelfinder.png", meta:"5 kursi • AC • Auto"},
+      {nama:"Mitsubishi Xpander", harga:"Rp 450.000 / hari", foto:"https://res.cloudinary.com/mufautoshow/image/upload/f_auto,f_auto/w_1200/v1608086376/moas/news/1605461108_mitsubishi-xpander-cross-kelebihan-spesifikasi-dan-harga.jpg", meta:"7 kursi • AC • Manual"}
+    ]
+    </script>
+
+    <!-- Generate mobil -->
+    <script>
+    document.write(
+      mobilList.map(m=>`
+      <div class="card">
+        <img src="${m.foto}">
+        <h3>${m.nama}</h3>
+        <p class="price">${m.harga}</p>
+        <p class="meta">${m.meta}</p>
+        <div class="actions">
+          <button class="btn sewa" data-nama="${m.nama}">Sewa</button>
+          <button class="btn ghost">Detail</button>
+        </div>
+      </div>`).join('')
+    )
+    </script>
+
+  </div>
+</section>
+
+<!-- ==== KONTAK ==== -->
+<section id="contact" class="contact">
+  <div class="container contact-inner">
+    <div>
+      <h2>Hubungi Kami</h2>
+      <p>WhatsApp: <a href="https://wa.me/628123456789" target="_blank">+62 877-3918-9892</a></p>
+      <p>Email: <a href="mailto:sewaaja@gmail.com">sewaaja@gmail.com</a></p>
+    </div>
+
+    <form id="contactForm" class="contact-form">
+      <label>Nama <input required></label>
+      <label>Email <input type="email" required></label>
+      <label>Pesan <textarea rows="4" required></textarea></label>
+      <button class="btn primary">Kirim</button>
+    </form>
+  </div>
+</section>
+
+<footer class="site-footer">
+  <div class="container"><p>© 2025 Sewa Aja — Semua hak dilindungi</p></div>
+</footer>
+
+<!-- ==== MODAL BOOKING ==== -->
+<div id="modal" class="modal">
+  <div class="modal-content">
+    <button class="modal-close" id="closeModal">&times;</button>
+    <h3>Form Pemesanan</h3>
+    <form id="bookingForm">
+      <label>Nama <input id="nama" required></label>
+      <label>Telepon <input id="telp" required></label>
+      <label>Pilih Mobil <select id="pilihMobil"></select></label>
+      <label>Tanggal Mulai <input type="date" id="start" required></label>
+      <label>Tanggal Selesai <input type="date" id="end" required></label>
+      <button class="btn primary">Konfirmasi</button>
+    </form>
+  </div>
+</div>
+
+<script>
+/* ==== JAVASCRIPT ==== */
+const modal=document.getElementById('modal'),
+openBooking=document.getElementById('openBooking'),
+closeModal=document.getElementById('closeModal'),
+pilihMobil=document.getElementById('pilihMobil');
+
+mobilList.forEach(m=>{
+ let o=document.createElement('option');
+ o.textContent=m.nama; o.value=m.nama; pilihMobil.append(o)
+});
+
+document.querySelectorAll('.sewa').forEach(btn=>{
+ btn.onclick=()=>{pilihMobil.value=btn.dataset.nama;modal.style.display='flex'}
+});
+openBooking.onclick=()=>modal.style.display='flex';
+closeModal.onclick=()=>modal.style.display='none';
+modal.onclick=e=>{if(e.target===modal)modal.style.display='none'}
+
+document.getElementById('bookingForm').onsubmit=e=>{
+ e.preventDefault();
+ alert("Pemesanan berhasil!\nMobil: "+pilihMobil.value);
+ modal.style.display='none';
+ e.target.reset();
+}
+
+document.getElementById('contactForm').onsubmit=e=>{
+ e.preventDefault();alert("Pesan terkirim!");e.target.reset();
+}
+</script>
+
+</body>
+</html>
